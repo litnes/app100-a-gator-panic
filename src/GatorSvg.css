@@ -1,0 +1,31 @@
+.gator-svg {
+  display: block;
+  overflow: visible;
+}
+
+/* ===== Whacked flash ===== */
+@keyframes gator-whacked {
+  0%   { filter: brightness(1) saturate(1); opacity: 1; }
+  15%  { filter: brightness(2.5) saturate(0) sepia(1) hue-rotate(-20deg); opacity: 1; }
+  60%  { filter: brightness(1.8) saturate(0) sepia(1) hue-rotate(-20deg); opacity: 0.7; }
+  100% { filter: brightness(1) saturate(1); opacity: 0; }
+}
+
+.gator-svg.whacked {
+  animation: gator-whacked 0.4s ease-out forwards;
+  pointer-events: none;
+}
+
+/* ===== Mouth open animation ===== */
+@keyframes mouth-open {
+  0%   { transform: scaleY(0.05); opacity: 0; }
+  20%  { transform: scaleY(1);    opacity: 1; }
+  72%  { transform: scaleY(1);    opacity: 1; }
+  100% { transform: scaleY(0.05); opacity: 0; }
+}
+
+.mouth-open {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+  animation: mouth-open 1.4s ease-in-out forwards;
+}

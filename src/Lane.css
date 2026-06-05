@@ -1,0 +1,130 @@
+.lane {
+  width: 110px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ===== Sandy beach arena ===== */
+.lane-arena {
+  width: 110px;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f0ddb0 0%, #e2c07a 100%);
+  border-radius: 8px 8px 0 0;
+  box-shadow: inset 0 2px 6px rgba(100, 60, 0, 0.12);
+}
+
+/* Subtle hover ring on arena */
+.lane-arena::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0);
+  transition: background 120ms;
+  pointer-events: none;
+}
+.lane:hover .lane-arena::after {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* ===== Anger tint ===== */
+.lane--anger .lane-arena {
+  background: linear-gradient(180deg, #f0c098 0%, #d8905a 100%);
+}
+
+/* ===== Bush overlay ===== */
+.lane-bush {
+  position: absolute;
+  /* bottom of arena (200px) minus key-label height (46px) = 154px from top, but
+     we want the bush to sit at the bottom of the arena.
+     lane-arena is 200px, key-label area ~46px → arena bottom = 200px from top of lane.
+     bush height = 70px → bush top = 200 - 70 = 130px from lane top. */
+  top: 130px;
+  left: 0;
+  width: 110px;
+  height: 70px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ===== Gator container (inside arena) ===== */
+.gator-container {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  /* transform is set via inline style */
+  z-index: 1;
+}
+
+/* ===== Hit text ===== */
+@keyframes ite-float {
+  0%   { opacity: 1; transform: translateX(-50%) translateY(0)    scale(1); }
+  65%  { opacity: 1; transform: translateX(-50%) translateY(-22px) scale(1.1); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-34px) scale(0.9); }
+}
+
+.hit-text {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  font-size: 1rem;
+  font-weight: 900;
+  color: #e03030;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: ite-float 0.6s ease-out forwards;
+  z-index: 10;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== Bite text ===== */
+@keyframes gabu-pop {
+  0%   { opacity: 0; transform: translateX(-50%) scale(0.5); }
+  18%  { opacity: 1; transform: translateX(-50%) scale(1.25); }
+  55%  { opacity: 1; transform: translateX(-50%) scale(1); }
+  100% { opacity: 0; transform: translateX(-50%) scale(0.7); }
+}
+
+.bite-text {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #c0392b;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: gabu-pop 0.8s ease-out forwards;
+  z-index: 10;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+/* ===== Key label ===== */
+.key-label {
+  margin-top: 8px;
+  width: 38px;
+  height: 38px;
+  border: 2px solid #8b6914;
+  border-radius: 7px;
+  background: #f0d080;
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-align: center;
+  line-height: 34px;
+  color: #5a3a00;
+  box-shadow: 0 3px 0 #8b6914;
+  transition: transform 70ms, box-shadow 70ms;
+  z-index: 3;
+  position: relative;
+}
+
+.key-label.pressed {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #8b6914;
+}

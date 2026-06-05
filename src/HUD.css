@@ -1,0 +1,45 @@
+.hud {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 16px;
+  padding: 10px 24px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 12px;
+  border: 1.5px solid rgba(139, 105, 20, 0.3);
+}
+
+.hud-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.hud-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #7a5020;
+  letter-spacing: 0.04em;
+}
+
+.hud-value {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #3a2000;
+  line-height: 1;
+  min-width: 2.5ch;
+  text-align: center;
+}
+
+@keyframes time-blink {
+  0%, 100% { color: #c0392b; }
+  50%       { color: #ff8060; }
+}
+
+.hud-time.danger {
+  animation: time-blink 0.5s ease-in-out infinite;
+}
+
+.hud-bites {
+  color: #c0392b;
+}

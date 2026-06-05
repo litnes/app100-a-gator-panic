@@ -1,0 +1,36 @@
+@keyframes anger-enter {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.65); }
+  55%  { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes banner-shake {
+  0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+  20%       { transform: translate(-50%, -50%) rotate(-2.5deg); }
+  40%       { transform: translate(-50%, -50%) rotate(2.5deg); }
+  60%       { transform: translate(-50%, -50%) rotate(-1.5deg); }
+  80%       { transform: translate(-50%, -50%) rotate(1.5deg); }
+}
+
+.anger-banner {
+  position: fixed;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(200, 40, 20, 0.92);
+  color: #fff8e0;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 900;
+  padding: 0.5em 1.2em;
+  border-radius: 18px;
+  border: 3px solid #ff9966;
+  box-shadow:
+    0 0 0 6px rgba(255, 80, 30, 0.3),
+    0 8px 32px rgba(200, 40, 0, 0.6);
+  z-index: 100;
+  pointer-events: none;
+  white-space: nowrap;
+  animation:
+    anger-enter  0.45s ease-out forwards,
+    banner-shake 0.45s 0.45s ease-in-out;
+}

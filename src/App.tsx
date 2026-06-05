@@ -1,46 +1,45 @@
 import { useGame } from "./useGame";
-import { Hole } from "./Hole";
+import { HUD } from "./HUD";
+import { Board } from "./Board";
+import { AngerBanner } from "./AngerBanner";
+import { StartOverlay } from "./StartOverlay";
+import { GameOverOverlay } from "./GameOverOverlay";
 import "./App.css";
 
 export default function App() {
-  const { phase, score, timeLeft, holes, startGame, whack } = useGame();
+  const { gameState, pressedLanes, startGame, whack } = useGame();
+  const { gamePhase, score, biteCount, timeLeft, gators, angerBannerVisible } = gameState;
 
   return (
     <div className="app">
-      <h1 className="title">🐊 わにわにパニック</h1>
+      <h1 className="title">わにわにパニック</h1>
 
-      <div className="hud">
-        <div className="hud-item">
-          <span className="hud-label">スコア</span>
-          <span className="hud-value">{score}</span>
-        </div>
-        <div className="hud-item">
-          <span className="hud-label">残り時間</span>
-          <span className={`hud-value ${timeLeft <= 5 && phase === "playing" ? "danger" : ""}`}>
-            {timeLeft}s
-          </span>
-        </div>
-      </div>
+      <HUD
+        score={score}
+        biteCount={biteCount}
+        timeLeft={timeLeft}
+        gamePhase={gamePhase}
+      />
 
-      <div className="board">
-        {holes.map((hole) => (
-          <Hole key={hole.id} hole={hole} onWhack={whack} />
-        ))}
-      </div>
+      <Board
+        gators={gators}
+        gamePhase={gamePhase}
+        onWhack={whack}
+        pressedLanes={pressedLanes}
+      />
 
-      {phase === "idle" && (
-        <div className="overlay">
-          <p className="overlay-text">ワニが出たら素早くクリック！</p>
-          <button className="btn-start" onClick={startGame}>スタート</button>
-        </div>
+      {angerBannerVisible && <AngerBanner />}
+
+      {gamePhase === "idle" && (
+        <StartOverlay onStart={startGame} />
       )}
 
-      {phase === "gameover" && (
-        <div className="overlay">
-          <p className="overlay-text">ゲームオーバー！</p>
-          <p className="final-score">スコア: {score}</p>
-          <button className="btn-start" onClick={startGame}>もう一度</button>
-        </div>
+      {gamePhase === "gameover" && (
+        <GameOverOverlay
+          score={score}
+          biteCount={biteCount}
+          onRestart={startGame}
+        />
       )}
     </div>
   );
