@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import type { GameState, GatorState, GatorPhase, GatorKind } from "./types";
+import { playStart, playWhack, playGameOver } from "./sounds";
 import {
   LANE_COUNT,
   GAME_DURATION,
@@ -245,6 +246,7 @@ export function useGame() {
     angerEndRef.current = setTimeout(() => {
       clearTimeout(spawnRef.current!);
       spawnRef.current = null;
+      playGameOver();
       setGameState(prev => ({ ...prev, gamePhase: "gameover", gators: [] }));
     }, ANGER_DURATION);
   }, [scheduleSpawn]);
@@ -253,6 +255,7 @@ export function useGame() {
   const startGame = useCallback(() => {
     clearTimers();
     prevTsRef.current = null;
+    playStart();
 
     const fresh: GameState = { ...INITIAL, gamePhase: "early" };
     setGameState(fresh);
@@ -290,6 +293,7 @@ export function useGame() {
         (g.gatorPhase === "rising" || g.gatorPhase === "up" || g.gatorPhase === "biting")
       );
       if (!target) return prev;
+      playWhack();
 
       const bonus = gamePhase === "anger" ? 2 : 1;
       return {

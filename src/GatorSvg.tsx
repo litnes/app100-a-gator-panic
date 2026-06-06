@@ -17,6 +17,7 @@ export function GatorSvg({ kind: _kind, gatorPhase, biteElapsed: _biteElapsed }:
       width={GATOR_WIDTH}
       height={GATOR_HEIGHT}
       className={`gator-svg${isWhacked ? " whacked" : ""}`}
+      style={{ transform: "rotate(180deg)" }}
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >

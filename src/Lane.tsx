@@ -4,11 +4,13 @@ import type { GatorState, GamePhase } from "./types";
 import { GATOR_HEIGHT, BUSH_HEIGHT, GATOR_CONFIG } from "./constants";
 import "./Lane.css";
 
-// When riseProgress=0: gator fully hidden (offsetY = GATOR_HEIGHT = 150)
-// When riseProgress=1, riseRatio=1: gator fully up (offsetY = 0, 80px of snout/body visible above bush)
-// When riseProgress=1, riseRatio=0.35: offsetY = 52 (only ~28px of snout visible above bush)
-// Formula derivation: offsetY = GATOR_HEIGHT - riseProgress * (BUSH_HEIGHT + VISIBLE_MAX * riseRatio)
-const VISIBLE_MAX = GATOR_HEIGHT - BUSH_HEIGHT; // 80px: max visible above the bush
+// Bush is at top of arena; gator slides DOWN from behind the bush (SVG rotated 180deg, snout faces down).
+// Container anchor: top = BUSH_HEIGHT (70px).
+// offsetY = riseProgress * VISIBLE_MAX * riseRatio - GATOR_HEIGHT
+//   riseProgress=0            → offsetY=-150  (fully hidden behind/above bush)
+//   riseProgress=1, ratio=1   → offsetY=-70   (80px of snout visible below bush)
+//   riseProgress=1, ratio=0.35→ offsetY=-122  (28px visible)
+const VISIBLE_MAX = GATOR_HEIGHT - BUSH_HEIGHT; // 80px
 
 type Props = {
   laneId: number;
@@ -24,8 +26,8 @@ export function Lane({ laneId, keyLabel, gator, onWhack, gamePhase, isKeyPressed
   const hasActiveGator = gator !== undefined && gator.gatorPhase !== "hidden";
 
   const offsetY = hasActiveGator
-    ? GATOR_HEIGHT - gator!.riseProgress * (BUSH_HEIGHT + VISIBLE_MAX * GATOR_CONFIG[gator!.kind].riseRatio)
-    : GATOR_HEIGHT;
+    ? gator!.riseProgress * VISIBLE_MAX * GATOR_CONFIG[gator!.kind].riseRatio - GATOR_HEIGHT
+    : -GATOR_HEIGHT;
 
   return (
     <div

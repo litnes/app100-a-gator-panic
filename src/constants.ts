@@ -2,8 +2,8 @@ import type { GamePhase, GatorKind } from "./types";
 
 export const LANE_COUNT = 5;
 export const GAME_DURATION = 60;
-export const ANGER_START_AT = 55;       // elapsed seconds to trigger anger
-export const ANGER_DURATION = 6000;     // ms: total anger phase length
+export const ANGER_START_AT = 50;       // elapsed seconds to trigger anger
+export const ANGER_DURATION = 10000;    // ms: total anger phase length (10s)
 export const ANGER_BANNER_DURATION = 2000;
 
 export const PHASE_EARLY_END = 20;
